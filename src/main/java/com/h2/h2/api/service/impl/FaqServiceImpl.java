@@ -14,32 +14,32 @@ import javax.persistence.EntityNotFoundException;
 public class FaqServiceImpl implements FaqService {
 
     @Autowired
-    private FaqRepository unidadOperativaRespository;
+    private FaqRepository faqRepository;
 
     @Override
     public List<FaqModel> listados() {
-        return unidadOperativaRespository.findAll();
+        return faqRepository.findAll();
     }
 
     @Override
     public FaqModel crear(FaqModel unidadOperativa) {
-        return unidadOperativaRespository.save(unidadOperativa);
+        return faqRepository.save(unidadOperativa);
     }
 
     @Override
     public FaqModel update(FaqModel unidadOperativa) {
-        if (unidadOperativaRespository.existsById(unidadOperativa.getIdFaq())) {
-            return unidadOperativaRespository.save(unidadOperativa);
+        if (faqRepository.existsById(unidadOperativa.getIdfaq())) {
+            return faqRepository.save(unidadOperativa);
         } else {
-            throw new EntityNotFoundException("Unidad Operativa con id " + unidadOperativa.getIdFaq() + " no encontrada.");
+            throw new EntityNotFoundException("Unidad Operativa con id " + unidadOperativa.getIdfaq() + " no encontrada.");
         }
     }
 
     @Override
-    public FaqModel delete(Long id) {
-        FaqModel unidadbusca = unidadOperativaRespository.findById(id).get();
+    public FaqModel delete(Integer id) {
+        FaqModel unidadbusca = faqRepository.findById(id).get();
         unidadbusca.setStatus("I");
-        return unidadOperativaRespository.save(unidadbusca);
+        return faqRepository.save(unidadbusca);
     }
 
 }

@@ -6,10 +6,11 @@ import java.util.List;
 
 public interface FaqService {
     List<FaqModel> listados();
-    FaqModel crear(FaqModel unidadOperativa);
 
-    FaqModel update(FaqModel unidadOperativa);
+    FaqModel crear(FaqModel faqModel);
 
-    FaqModel delete (Long id);
+    FaqModel update(FaqModel faqModel);
+
+    FaqModel delete (Integer id);
 
 }
