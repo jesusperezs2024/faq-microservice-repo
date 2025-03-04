@@ -18,20 +18,36 @@ public class FaqServiceImpl implements FaqService {
 
     @Override
     public List<FaqModel> listados() {
-        return faqRepository.findAll();
+        return faqRepository.findByStatus("A");
     }
 
     @Override
-    public FaqModel crear(FaqModel unidadOperativa) {
-        return faqRepository.save(unidadOperativa);
+    public FaqModel crear(FaqModel faqModel) {
+    if (faqModel.getStatus() == null) {
+        faqModel.setStatus("A");
     }
 
+    if (faqModel.getCreateUser() == null) {
+        faqModel.setCreateUser("ADMIN");
+    }
+
+    if (faqModel.getCategory() == null) {
+        faqModel.setCategory("Sin Categoria asignada");
+    }
+
+    return faqRepository.save(faqModel);
+    }
+
+
     @Override
-    public FaqModel update(FaqModel unidadOperativa) {
-        if (faqRepository.existsById(unidadOperativa.getIdfaq())) {
-            return faqRepository.save(unidadOperativa);
+    public FaqModel update(FaqModel faqModel) {
+        if (faqRepository.existsById(faqModel.getIdfaq())) {
+            if (faqModel.getUpdateUser() == null) {
+                faqModel.setUpdateUser("USER");
+            }
+            return faqRepository.save(faqModel);
         } else {
-            throw new EntityNotFoundException("Unidad Operativa con id " + unidadOperativa.getIdfaq() + " no encontrada.");
+            throw new EntityNotFoundException("Unidad Operativa con id " + faqModel.getIdfaq() + " no encontrada.");
         }
     }
 
